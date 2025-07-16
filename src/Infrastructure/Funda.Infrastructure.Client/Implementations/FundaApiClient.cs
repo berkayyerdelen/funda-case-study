@@ -26,7 +26,7 @@ public class FundaApiClient : IFundaApiClient
             if (string.IsNullOrEmpty(nextPageUrl))
             {
                 // Compose the first page URL with your key inside the path + query params
-                requestUrl = $"{_options.BaseUrl}{_options.ApiKey}/?type=koop&zo=/amsterdam/tuin/&page=1&pagesize=10";
+                requestUrl = $"{_options.BaseUrl}{_options.ApiKey}/?type=koop&zo=/amsterdam/&page=1&pagesize=25";
             }
             else
             {

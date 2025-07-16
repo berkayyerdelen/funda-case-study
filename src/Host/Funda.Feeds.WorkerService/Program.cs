@@ -58,6 +58,7 @@ using (var scope = host.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<IDatabase>();
     await db.StringSetAsync(CacheKeys.Top10MakelaarKey, "myvalue",TimeSpan.FromSeconds(5));
+    await db.StringSetAsync(CacheKeys.Top10MakelaarKey, "myvalue",TimeSpan.FromSeconds(5));
 }
 
 await host.RunAsync();

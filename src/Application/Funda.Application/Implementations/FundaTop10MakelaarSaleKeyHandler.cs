@@ -4,13 +4,14 @@ using Microsoft.Extensions.Logging;
 
 namespace Funda.Application.Implementations;
 
-public class FundaTop10MakelaarKeyHandler(
+public class FundaTop10MakelaarSaleKeyHandler(
     ICacheService cacheService,
     IFundaApiClient fundaClient,
     ISlidingWindowRateLimiter slidingWindowRateLimiter,
     ILogger<FundaTop10MakelaarKeyHandler> logger) : IRedisKeyEventHandler
 {
-    public IList<string> KeyPatterns { get; } = ["funda:Makelaar:top10", "funda:Makelaar:top10:rate-limit"];
+    public IList<string> KeyPatterns { get; } = new List<string>
+        { "funda:Makelaar:sale:top10", "funda:Makelaar:sale:top10:rate-limit" };
 
     public async Task HandleAsync(string eventType, CancellationToken cancellationToken)
     {
@@ -22,7 +23,7 @@ public class FundaTop10MakelaarKeyHandler(
             return;
         }
 
-        var isProgressing = await cacheService.KeyExist("funda:Makelaar:top10:progress");
+        var isProgressing = await cacheService.KeyExist("funda:Makelaar:sale:top10:progress");
 
         if (await cacheService.KeyExist(KeyPatterns[0]) && !isProgressing)
         {
@@ -30,12 +31,10 @@ public class FundaTop10MakelaarKeyHandler(
             return;
         }
 
-        // Start from saved progress URL or null (first page)
         string? url = null;
         if (isProgressing)
         {
-            url = await cacheService.Get("funda:Makelaar:top10:progress");
-            // Defensive: if empty string stored, treat as null for first page
+            url = await cacheService.Get("funda:Makelaar:sale:top10:progress");
             if (string.IsNullOrWhiteSpace(url))
             {
                 url = null;
@@ -53,7 +52,7 @@ public class FundaTop10MakelaarKeyHandler(
             do
             {
                 var allowed = await slidingWindowRateLimiter.TryAcquire(
-                    "funda:Makelaar:top10:rate-limit",
+                    "funda:Makelaar:sale:top10:rate-limit",
                     100,
                     TimeSpan.FromMinutes(1));
 
@@ -62,8 +61,7 @@ public class FundaTop10MakelaarKeyHandler(
                     logger.LogWarning("Rate limit exceeded during loop for key {Key} at URL {Url}", KeyPatterns[0],
                         url ?? "first page");
 
-                    // Save progress to continue next time
-                    await cacheService.Set("funda:Makelaar:top10:progress", url ?? string.Empty);
+                    await cacheService.Set("funda:Makelaar:sale:top10:progress", url ?? string.Empty);
 
                     success = false;
                     break;
@@ -73,7 +71,6 @@ public class FundaTop10MakelaarKeyHandler(
 
                 if (response?.Objects == null || response.Objects.Count == 0)
                 {
-                    // No more data to process
                     break;
                 }
 
@@ -92,11 +89,9 @@ public class FundaTop10MakelaarKeyHandler(
                     await cacheService.SortedSetIncrement(KeyPatterns[0], group.MakelaarNaam, group.Count);
                 }
 
-                // Move to next page URL
                 url = response.Paging?.VolgendeUrl;
 
-                // Save progress AFTER successful processing of this page
-                await cacheService.Set("funda:Makelaar:top10:progress", url ?? string.Empty);
+                await cacheService.Set("funda:Makelaar:sale:top10:progress", url ?? string.Empty);
             } while (!string.IsNullOrEmpty(url) && !cancellationToken.IsCancellationRequested);
         }
         catch (Exception ex)
@@ -110,7 +105,7 @@ public class FundaTop10MakelaarKeyHandler(
         {
             logger.LogInformation("Successfully stored Top 10 makelaars into Redis under key {Key}", KeyPatterns[0]);
             await cacheService.KeyExpire(KeyPatterns[0], TimeSpan.FromMinutes(720));
-            await cacheService.DeleteByKey("funda:Makelaar:top10:progress");
+            await cacheService.DeleteByKey("funda:Makelaar:sale:top10:progress");
         }
         else
         {
