@@ -23,6 +23,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Funda.Application", "src\Application\Funda.Application\Funda.Application.csproj", "{2CD93A03-2870-4A39-9EF4-6FCA776575E8}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{BD86DBBC-02A9-4898-B33D-8E4E96D80D12}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Funda.Application.Tests", "src\Tests\Funda.Application.Tests\Funda.Application.Tests.csproj", "{8F12E1FA-C5AA-49DF-A0E7-4AF65138A403}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +39,7 @@ Global
 		{FF22A48E-F1E8-43C9-8EF6-A78070F71B63} = {EC9C5758-ED42-40D4-B489-6B44DBC2F878}
 		{1A6FB82E-C0C1-478B-96C7-CB63D6786760} = {EC9C5758-ED42-40D4-B489-6B44DBC2F878}
 		{2CD93A03-2870-4A39-9EF4-6FCA776575E8} = {D49C8125-CF25-46D0-ACA0-AC02D5EC62A1}
+		{8F12E1FA-C5AA-49DF-A0E7-4AF65138A403} = {BD86DBBC-02A9-4898-B33D-8E4E96D80D12}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{A165F156-C8BE-4FDC-B7B8-2E35B4F3F575}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -61,5 +66,9 @@ Global
 		{2CD93A03-2870-4A39-9EF4-6FCA776575E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2CD93A03-2870-4A39-9EF4-6FCA776575E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2CD93A03-2870-4A39-9EF4-6FCA776575E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F12E1FA-C5AA-49DF-A0E7-4AF65138A403}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F12E1FA-C5AA-49DF-A0E7-4AF65138A403}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F12E1FA-C5AA-49DF-A0E7-4AF65138A403}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F12E1FA-C5AA-49DF-A0E7-4AF65138A403}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
