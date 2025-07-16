@@ -2,6 +2,6 @@ namespace Funda.Infrastructure.Cache.Contracts;
 
 public interface IRedisKeyEventHandler
 {
-    string Key { get; }
+    IReadOnlyCollection<string> KeyPatterns { get; }
     Task HandleAsync(string eventType, CancellationToken cancellationToken);
 }

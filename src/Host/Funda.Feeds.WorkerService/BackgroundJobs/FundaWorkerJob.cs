@@ -28,7 +28,7 @@ public class FundaWorkerJob : BackgroundService
             await subscriber.SubscribeAsync(channel, async (redisChannel, message) =>
             {
                 var key = (string)message;
-                var handler = _handlers.FirstOrDefault(h => h.Key == key);
+                var handler = _handlers.FirstOrDefault(h => h.KeyPatterns.Contains(key));
 
                 if (handler != null)
                 {
