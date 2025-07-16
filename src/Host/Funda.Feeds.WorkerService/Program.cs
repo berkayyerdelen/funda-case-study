@@ -21,9 +21,6 @@ using IHost host = Host.CreateDefaultBuilder(args)
     })
     .ConfigureServices((hostContext, services) =>
     {
-        // var redisHost = Environment.GetEnvironmentVariable("REDIS_HOST") ?? "redis";
-        // var redisPort = Environment.GetEnvironmentVariable("REDIS_PORT") ?? "6379";
-        
         services.Configure<FundaApiOptions>(hostContext.Configuration.GetSection("FundaApi"));
         
         var cacheOptions=  hostContext.Configuration.GetSection("RedisCache").Get<CacheOptions>();
