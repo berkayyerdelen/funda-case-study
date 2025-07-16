@@ -33,7 +33,7 @@ public class FundaWorkerService : BackgroundService
                 if (handler != null)
                 {
                     _logger.LogInformation("Received Redis event '{Channel}' for key '{Key}'", redisChannel, key);
-                    await handler.HandleAsync(redisChannel, stoppingToken);
+                    await handler.Handle(redisChannel, stoppingToken);
                 }
             });
         }

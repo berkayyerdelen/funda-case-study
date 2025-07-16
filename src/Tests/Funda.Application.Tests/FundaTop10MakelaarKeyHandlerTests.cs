@@ -43,7 +43,7 @@ public class FundaTop10MakelaarKeyHandlerTests
         _cacheService.AcquireLock(Arg.Any<string>(), Arg.Any<TimeSpan>()).Returns(redLock);
 
         // Act
-        await _handler.HandleAsync("keyevent", CancellationToken.None);
+        await _handler.Handle("keyevent", CancellationToken.None);
 
         // Assert
         await _fundaClient.DidNotReceive().GetFeeds(Arg.Any<string>(), Arg.Any<CancellationToken>());
@@ -60,7 +60,7 @@ public class FundaTop10MakelaarKeyHandlerTests
         _cacheService.KeyExist("funda:Makelaar:top10:progress").Returns(false);
 
         // Act
-        await _handler.HandleAsync("keyevent", CancellationToken.None);
+        await _handler.Handle("keyevent", CancellationToken.None);
 
         // Assert
         await _fundaClient.DidNotReceive().GetFeeds(Arg.Any<string>(), Arg.Any<CancellationToken>());
@@ -77,7 +77,7 @@ public class FundaTop10MakelaarKeyHandlerTests
         _rateLimiter.TryAcquire(Arg.Any<string>(), Arg.Any<int>(), Arg.Any<TimeSpan>()).Returns(false);
 
         // Act
-        await _handler.HandleAsync("keyevent", CancellationToken.None);
+        await _handler.Handle("keyevent", CancellationToken.None);
 
         // Assert
         await _fundaClient.DidNotReceive().GetFeeds(Arg.Any<string>(), Arg.Any<CancellationToken>());
@@ -107,7 +107,7 @@ public class FundaTop10MakelaarKeyHandlerTests
         _fundaClient.GetFeeds(Arg.Any<string>(), Arg.Any<CancellationToken>()).Returns(response);
 
         // Act
-        await _handler.HandleAsync("keyevent", CancellationToken.None);
+        await _handler.Handle("keyevent", CancellationToken.None);
 
         // Assert
         await _cacheService.Received().SortedSetIncrement("funda:Makelaar:top10", "Makelaar1", 2);
@@ -147,7 +147,7 @@ public class FundaTop10MakelaarKeyHandlerTests
         _fundaClient.GetFeeds("page2", Arg.Any<CancellationToken>()).Returns(response2);
 
         // Act
-        await _handler.HandleAsync("keyevent", CancellationToken.None);
+        await _handler.Handle("keyevent", CancellationToken.None);
 
         // Assert
         await _fundaClient.Received().GetFeeds(null, Arg.Any<CancellationToken>());
