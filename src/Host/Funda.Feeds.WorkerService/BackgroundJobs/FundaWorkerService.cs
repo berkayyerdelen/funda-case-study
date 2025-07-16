@@ -5,14 +5,14 @@ using StackExchange.Redis;
 
 namespace Funda.Feeds.WorkerService.BackgroundJobs;
 
-public class FundaWorkerJob : BackgroundService
+public class FundaWorkerService : BackgroundService
 {
     private readonly IConnectionMultiplexer _redis;
     private readonly IEnumerable<IRedisKeyEventHandler> _handlers;
-    private readonly ILogger<FundaWorkerJob> _logger;
+    private readonly ILogger<FundaWorkerService> _logger;
     private static readonly string[] Channels = ["__keyevent@0__:expired", "__keyevent@0__:del"];
 
-    public FundaWorkerJob(ILogger<FundaWorkerJob> logger, IConnectionMultiplexer redis, IEnumerable<IRedisKeyEventHandler> handlers)
+    public FundaWorkerService(ILogger<FundaWorkerService> logger, IConnectionMultiplexer redis, IEnumerable<IRedisKeyEventHandler> handlers)
     {
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         _redis = redis;

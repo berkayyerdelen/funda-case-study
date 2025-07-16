@@ -3,6 +3,7 @@ using Funda.Feeds.WorkerService.BackgroundJobs;
 using Funda.Infrastructure.Cache.Configuration;
 using Funda.Infrastructure.Cache.Contracts;
 using Funda.Infrastructure.Cache.Implementations;
+using Funda.Infrastructure.Cache.Shared;
 using Funda.Infrastructure.Client.Configuration;
 using Funda.Infrastructure.Client.Contracts;
 using Microsoft.Extensions.Configuration;
@@ -48,8 +49,15 @@ using IHost host = Host.CreateDefaultBuilder(args)
             client.Timeout = TimeSpan.FromSeconds(30);
         });
 
-        services.AddHostedService<FundaWorkerJob>();
+        services.AddHostedService<FundaWorkerService>();
     })
     .Build();
+
+//Setup Redis cache and test connection
+using (var scope = host.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<IDatabase>();
+    await db.StringSetAsync(CacheKeys.Top10MakelaarKey, "myvalue",TimeSpan.FromSeconds(5));
+}
 
 await host.RunAsync();
