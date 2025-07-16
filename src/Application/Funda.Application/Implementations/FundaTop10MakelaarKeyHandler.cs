@@ -75,7 +75,7 @@ public class FundaTop10MakelaarKeyHandler(
 
 
         logger.LogInformation("Stored Top 10 makelaars into Redis under key {Key}", Key);
-
+        await cacheService.KeyExpire("funda:Makelaar:top10:progress", TimeSpan.FromMinutes(720));
         await cacheService.DeleteByKey("funda:Makelaar:top10:progress");
     }
 }

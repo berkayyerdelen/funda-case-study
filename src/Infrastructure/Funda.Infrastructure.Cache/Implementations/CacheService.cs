@@ -41,6 +41,11 @@ public class CacheService(RedLockFactory redLockFactory, IDatabase redisCache) :
     {
         return await redisCache.KeyExistsAsync(key);
     }
+    
+    public async Task KeyExpire(string key, TimeSpan fromMinutes = default)
+    {
+        await redisCache.KeyExpireAsync(key, fromMinutes);
+    }
 
     public async Task<IEnumerable<(string Member, double Score)>> GetTopFromSortedSetAsync(string key, int count)
     {

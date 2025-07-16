@@ -11,4 +11,5 @@ public interface ICacheService
     Task<IEnumerable<(string Member, double Score)>> GetTopFromSortedSetAsync(string key, int count);
     Task<bool> KeyExist(string key);
     Task<string> Get(string key);
+    Task KeyExpire(string key, TimeSpan fromMinutes = default);
 }
