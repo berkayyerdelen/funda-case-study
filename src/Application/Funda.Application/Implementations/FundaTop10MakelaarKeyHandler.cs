@@ -23,16 +23,16 @@ public class FundaTop10MakelaarKeyHandler(
         }
 
 
-        if (await cacheService.KeyExist("funda:Makelaar:top10:Makelaar") &&
-            !await cacheService.KeyExist("funda:Makelaar:top10:progress"))
+        var isProgressing = await cacheService.KeyExist("funda:Makelaar:top10:progress");
+
+        if (await cacheService.KeyExist("funda:Makelaar:top10:Makelaar") && !isProgressing)
         {
             logger.LogInformation("Top 10 makelaars already processed, skipping.");
             return;
         }
 
-
         string? url = null;
-        if (await cacheService.KeyExist("funda:Makelaar:top10:progress"))
+        if (isProgressing)
         {
             url = await cacheService.Get("funda:Makelaar:top10:progress");
         }
