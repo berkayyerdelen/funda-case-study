@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="RedLock.net" Version="2.3.2" />
+      <PackageReference Include="StackExchange.Redis" Version="2.8.41" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Funda.Infrastructure.Client\Funda.Infrastructure.Client.csproj" />
+    </ItemGroup>
+
+</Project>

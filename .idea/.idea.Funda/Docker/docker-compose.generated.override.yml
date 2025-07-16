@@ -1,0 +1,40 @@
+# This is a generated file. Not intended for manual editing.
+services:
+  funda.api:
+    build:
+      context: "/Users/berkayyerdelen/RiderProjects/Funda"
+      dockerfile: "src/Host/Funda.Api/Dockerfile"
+      target: "base"
+    command: []
+    entrypoint:
+    - "dotnet"
+    - "/app/bin/Debug/net9.0/Funda.Api.dll"
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Development"
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+    image: "funda.api:dev"
+    ports: []
+    volumes:
+    - "/Users/berkayyerdelen/.nuget/packages:/home/app/.nuget/packages"
+    - "/Users/berkayyerdelen/RiderProjects/Funda/src/Host/Funda.Api:/app:rw"
+    - "/Users/berkayyerdelen/RiderProjects/Funda:/src:rw"
+    working_dir: "/app"
+  funda.feeds.workerservice:
+    build:
+      context: "/Users/berkayyerdelen/RiderProjects/Funda"
+      dockerfile: "src/Host/Funda.Feeds.WorkerService/Dockerfile"
+      target: "base"
+    command: []
+    entrypoint:
+    - "dotnet"
+    - "/app/bin/Debug/net9.0/Funda.Feeds.WorkerService.dll"
+    environment:
+      DOTNET_ENVIRONMENT: "Development"
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+    image: "funda.feeds.workerservice:dev"
+    ports: []
+    volumes:
+    - "/Users/berkayyerdelen/.nuget/packages:/home/app/.nuget/packages"
+    - "/Users/berkayyerdelen/RiderProjects/Funda/src/Host/Funda.Feeds.WorkerService:/app:rw"
+    - "/Users/berkayyerdelen/RiderProjects/Funda:/src:rw"
+    working_dir: "/app"
